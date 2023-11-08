@@ -11,6 +11,14 @@ class SystemView {
         const val LOTTO_END_NUM: Int = 45
         const val LOTTO_SIZE: Int = 6
     }
+
+    enum class prizeByRank(val rank: Int, val prize: Int) {
+        FIRST(0, 100000),
+        SECOND(1, 5000),
+        THIRD(2, 100),
+        FOURTH(3, 5),
+    }
+
     var canBuy: Int = 0
 
     fun canBuyMax() {
@@ -54,10 +62,10 @@ class SystemView {
         println("로또 당첨결과")
         lottoResult.rank.forEachIndexed { index, i ->
             when (index) {
-                0 -> lottoResult.prize += i * 100000 * KW
-                1 -> lottoResult.prize += i * 5000 * KW
-                2 -> lottoResult.prize += i * 100 * KW
-                3 -> lottoResult.prize += i * 5 * KW
+                prizeByRank.FIRST.rank -> lottoResult.prize += i * prizeByRank.FIRST.prize * KW
+                prizeByRank.SECOND.rank -> lottoResult.prize += i * prizeByRank.SECOND.prize * KW
+                prizeByRank.THIRD.rank -> lottoResult.prize += i * prizeByRank.THIRD.prize * KW
+                prizeByRank.FOURTH.rank -> lottoResult.prize += i * prizeByRank.FOURTH.prize * KW
             }
             println("${index + 1}등 : ${i}회")
         }
