@@ -4,17 +4,7 @@ import domain.Lotto
 
 class LottoService {
 
-    var totalCount: Int = 0
-
-    fun canBuyMax(): Int {
-        val money = readLine()!!.toInt()
-        val count = money / 1000
-
-        this.totalCount = count
-        return count
-    }
-
-    fun setManualCountAndAutoCount(lotto: Lotto) {
+    fun setManualCountAndAutoCount(lotto: Lotto, totalCount: Int) {
         lotto.manualLottoCount = readLine()!!.toInt()
         lotto.autoLottoCount = totalCount - lotto.manualLottoCount
     }
@@ -48,8 +38,9 @@ class LottoService {
         }
     }
 
-    fun getResult(lotto: Lotto): IntArray {
-        val rank = IntArray(4)
+    fun getResult(lotto: Lotto): Lotto {
+        lotto.rank.fill(0)
+        lotto.prize = 0
         val winNum = lotto.winNum
 
         for (nums in lotto.lottoNum) {
@@ -61,9 +52,9 @@ class LottoService {
                 }
             }
             if (count >= 3) {
-                rank[6 - count]++
+                lotto.rank[6 - count]++
             }
         }
-        return rank
+        return lotto
     }
 }
