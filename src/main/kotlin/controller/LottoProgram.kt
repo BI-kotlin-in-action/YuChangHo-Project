@@ -6,9 +6,13 @@ import view.SystemView
 import java.util.*
 
 class LottoProgram {
-    val lotto: Lotto = Lotto(sortedSetOf(), 0, 0, mutableListOf<SortedSet<Int>>(), 0, IntArray(4))
-    val lottoService: LottoService = LottoService()
-    val systemView: SystemView = SystemView()
+    companion object {
+        const val MAX_RANK: Int = 4
+        const val LOTTO_PRICE: Int = 1000
+    }
+    private val lotto: Lotto = Lotto(sortedSetOf(), 0, 0, mutableListOf<SortedSet<Int>>(), 0, IntArray(MAX_RANK))
+    private val lottoService: LottoService = LottoService()
+    private val systemView: SystemView = SystemView()
 
     fun run() {
         start()
@@ -23,7 +27,7 @@ class LottoProgram {
 
     fun selectLottoNum() {
         systemView.showManualLottoBuyMessage()
-        lottoService.setManualCountAndAutoCount(lotto, systemView.totalCount)
+        lottoService.setManualCountAndAutoCount(lotto, systemView.canBuy)
         lotto.lottoNum.clear()
 
         for (i in 0 until lotto.manualLottoCount) {
@@ -49,7 +53,7 @@ class LottoProgram {
     }
 
     fun replay() {
-        if (lotto.prize >= 1000) {
+        if (lotto.prize >= LOTTO_PRICE) {
             systemView.showRestartLottoMessage(lotto)
             run()
         }
