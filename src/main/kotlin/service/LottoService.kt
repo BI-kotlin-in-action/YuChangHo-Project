@@ -4,6 +4,7 @@ import domain.Lotto
 import domain.LottoResult
 import domain.User
 import java.util.*
+import java.util.Collections.shuffle
 
 class LottoService {
     companion object {
@@ -24,20 +25,25 @@ class LottoService {
     }
 
     fun makeRandomNum(): SortedSet<Int> {
-        val autoLottoNum: TreeSet<Int> = sortedSetOf()
+//        val autoLottoNum: TreeSet<Int> = sortedSetOf()
+//
+//        val range = (LOTTO_START_NUM..LOTTO_END_NUM)
+//        var i = 0
+//        while (i < LOTTO_SIZE) {
+//            val randomNumber = range.random()
+//
+//            if (randomNumber !in autoLottoNum) {
+//                autoLottoNum.add(randomNumber)
+//                i++
+//            }
+//        }
+//
+//        return autoLottoNum
 
-        val range = (LOTTO_START_NUM..LOTTO_END_NUM)
-        var i = 0
-        while (i < LOTTO_SIZE) {
-            val randomNumber = range.random()
+        val numbers = (LOTTO_START_NUM..LOTTO_END_NUM).toList()
+        shuffle(numbers)
 
-            if (randomNumber !in autoLottoNum) {
-                autoLottoNum.add(randomNumber)
-                i++
-            }
-        }
-
-        return autoLottoNum
+        return numbers.subList(0, 6).toSortedSet()
     }
 
     fun showLottoNum(user: User) {
