@@ -1,6 +1,6 @@
 package view
 
-import domain.Lotto
+import domain.LottoResult
 import java.util.*
 
 class SystemView {
@@ -50,24 +50,25 @@ class SystemView {
         println("로또 당첨번호 = $winNum")
     }
 
-    fun showLottoResultMessage(lotto: Lotto) {
+    fun showLottoResultMessage(lottoResult: LottoResult) {
         println("로또 당첨결과")
-        lotto.rank.forEachIndexed { index, i ->
+        lottoResult.rank.forEachIndexed { index, i ->
             when (index) {
-                0 -> lotto.prize += i * 100000 * KW
-                1 -> lotto.prize += i * 5000 * KW
-                2 -> lotto.prize += i * 100 * KW
-                3 -> lotto.prize += i * 5 * KW
+                0 -> lottoResult.prize += i * 100000 * KW
+                1 -> lottoResult.prize += i * 5000 * KW
+                2 -> lottoResult.prize += i * 100 * KW
+                3 -> lottoResult.prize += i * 5 * KW
             }
             println("${index + 1}등 : ${i}회")
         }
-        println("총상금 : ${lotto.prize / KW}KW ")
+        println("총상금 : ${lottoResult.prize / KW}KW ")
+        println("***********************************************************")
     }
 
-    fun showRestartLottoMessage(lotto: Lotto) {
+    fun showRestartLottoMessage(lottoResult: LottoResult) {
         println("당첨된 로또 금액으로 다시 로또를 삽니다 ")
-        println("당첨된 로또 금액은 ${lotto.prize}원 입니다.")
+        println("당첨된 로또 금액은 ${lottoResult.prize}원 입니다.")
 
-        canBuy = lotto.prize / LOTTO_PRICE
+        canBuy = lottoResult.prize / LOTTO_PRICE
     }
 }

@@ -1,6 +1,8 @@
 package service
 
 import domain.Lotto
+import domain.LottoResult
+import domain.User
 import java.util.*
 
 class LottoService {
@@ -11,14 +13,14 @@ class LottoService {
         const val LOTTO_SIZE: Int = 6
     }
 
-    fun setManualCountAndAutoCount(lotto: Lotto, totalCount: Int) {
-        lotto.manualLottoCount = readLine()!!.toInt()
-        lotto.autoLottoCount = totalCount - lotto.manualLottoCount
+    fun setManualCountAndAutoCount(user: User, totalCount: Int) {
+        user.manualLottoCount = readLine()!!.toInt()
+        user.autoLottoCount = totalCount - user.manualLottoCount
     }
 
-    fun setManualLottoNum(lotto: Lotto) {
+    fun setManualLottoNum(user: User) {
         val manualLottoNum = readLine()!!.split(" ").map { it.toInt() }.toSortedSet()
-        lotto.lottoNum.add(manualLottoNum)
+        user.lottoNum.add(manualLottoNum)
     }
 
     fun makeRandomNum(): SortedSet<Int> {
@@ -38,23 +40,23 @@ class LottoService {
         return autoLottoNum
     }
 
-    fun showLottoNum(lotto: Lotto) {
-        for (num in lotto.lottoNum) {
+    fun showLottoNum(user: User) {
+        for (num in user.lottoNum) {
             println(num)
         }
     }
 
-    fun getResult(lotto: Lotto): Lotto {
-        lotto.rank.fill(0)
-        lotto.prize = 0
+    fun getResult(lottoResult: LottoResult, lotto: Lotto, user: User): LottoResult {
+        lottoResult.rank.fill(0)
+        lottoResult.prize = 0
         val winNum = lotto.winNum
 
-        for (nums in lotto.lottoNum) {
+        for (nums in user.lottoNum) {
             var count = nums.intersect(winNum).size
             if (count >= (MAX_RANK - 1)) {
-                lotto.rank[LOTTO_SIZE - count]++
+                lottoResult.rank[LOTTO_SIZE - count]++
             }
         }
-        return lotto
+        return lottoResult
     }
 }
