@@ -3,9 +3,10 @@ package controller
 import domain.Lotto
 import service.LottoService
 import view.SystemView
+import java.util.*
 
 class LottoProgram {
-    val lotto: Lotto = Lotto(IntArray(6), 0, 0, mutableListOf<IntArray>(), 0, IntArray(4))
+    val lotto: Lotto = Lotto(sortedSetOf(), 0, 0, mutableListOf<SortedSet<Int>>(), 0, IntArray(4))
     val lottoService: LottoService = LottoService()
     val systemView: SystemView = SystemView()
 
@@ -23,11 +24,8 @@ class LottoProgram {
     fun selectLottoNum() {
         systemView.showManualLottoBuyMessage()
         lottoService.setManualCountAndAutoCount(lotto, systemView.totalCount)
-        println(lotto.manualLottoCount)
-        println(lotto.autoLottoCount)
-        println(systemView.totalCount)
-
         lotto.lottoNum.clear()
+
         for (i in 0 until lotto.manualLottoCount) {
             systemView.showNumInputMessage(i)
             lottoService.setManualLottoNum(lotto)
@@ -36,9 +34,10 @@ class LottoProgram {
         lotto.winNum = lottoService.makeRandomNum()
         systemView.showStartAutoLottoMessage()
 
-        for (i in 0 until lotto.autoLottoCount) {
+        repeat(lotto.autoLottoCount) {
             lotto.lottoNum.add(lottoService.makeRandomNum())
         }
+
         systemView.showFinishAutoLottoMessage()
     }
 

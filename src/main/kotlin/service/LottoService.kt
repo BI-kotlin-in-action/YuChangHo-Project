@@ -1,6 +1,7 @@
 package service
 
 import domain.Lotto
+import java.util.*
 
 class LottoService {
 
@@ -10,31 +11,30 @@ class LottoService {
     }
 
     fun setManualLottoNum(lotto: Lotto) {
-        val manualLottoNum = readLine()!!.split(" ").map { it.toInt() }.toIntArray()
-        manualLottoNum.sort()
+        val manualLottoNum = readLine()!!.split(" ").map { it.toInt() }.toSortedSet()
         lotto.lottoNum.add(manualLottoNum)
     }
 
-    fun makeRandomNum(): IntArray {
-        val autoLottoNum = IntArray(6)
+    fun makeRandomNum(): SortedSet<Int> {
+        val autoLottoNum: TreeSet<Int> = sortedSetOf()
+
         val range = (1..45)
         var i = 0
         while (i < 6) {
             val randomNumber = range.random()
 
             if (randomNumber !in autoLottoNum) {
-                autoLottoNum[i] = randomNumber
+                autoLottoNum.add(randomNumber)
                 i++
             }
         }
 
-        autoLottoNum.sort()
         return autoLottoNum
     }
 
     fun showLottoNum(lotto: Lotto) {
         for (num in lotto.lottoNum) {
-            println(num.contentToString())
+            println(num)
         }
     }
 
@@ -44,13 +44,7 @@ class LottoService {
         val winNum = lotto.winNum
 
         for (nums in lotto.lottoNum) {
-            var count = 0
-
-            for (i in nums.indices) {
-                if (nums[i] in winNum) {
-                    count++
-                }
-            }
+            var count = nums.intersect(winNum).size
             if (count >= 3) {
                 lotto.rank[6 - count]++
             }

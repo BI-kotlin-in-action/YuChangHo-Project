@@ -1,6 +1,7 @@
 package view
 
 import domain.Lotto
+import java.util.*
 
 class SystemView {
 
@@ -38,9 +39,9 @@ class SystemView {
         println("구매하신 로또 번호를 알려드립니다.")
     }
 
-    fun showWinNumMessage(winNum: IntArray) {
+    fun showWinNumMessage(winNum: SortedSet<Int>) {
         println("로또 당첨번호를 알려드립니다.")
-        println("로또 당첨번호 = ${winNum.contentToString()}")
+        println("로또 당첨번호 = $winNum")
     }
 
     fun showLottoResultMessage(lotto: Lotto) {
