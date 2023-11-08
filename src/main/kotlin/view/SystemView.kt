@@ -1,12 +1,24 @@
 package view
 
+import domain.Lotto
+
 class SystemView {
+
+    var totalCount: Int = 0
+
+    fun canBuyMax() {
+        val money = readLine()!!.toInt()
+        this.totalCount = money / 1000
+    }
     fun showStartMessage() {
         println("로또 금액은 1000원이며 로또 구매에 사용할 금액을 입력해주세요.")
     }
 
-    fun showManualLottoBuyMessage(count: Int) {
-        println("로또를 $count 장 만큼 구매할 수 있습니다.")
+    fun showManualLottoBuyMessage() {
+        if (totalCount == 0) {
+            canBuyMax()
+        }
+        println("로또를 $totalCount 장 만큼 구매할 수 있습니다.")
         println("수동으로 몇 장 구매하시겠습니까? 나머지는 모두 자동으로 구매합니다.")
     }
 
@@ -31,19 +43,24 @@ class SystemView {
         println("로또 당첨번호 = ${winNum.contentToString()}")
     }
 
-    fun showLottoResultMessage(rank: IntArray) {
-        var prize = 0
-
+    fun showLottoResultMessage(lotto: Lotto) {
         println("로또 당첨결과")
-        rank.forEachIndexed { index, i ->
+        lotto.rank.forEachIndexed { index, i ->
             when (index) {
-                0 -> prize += i * 100000
-                1 -> prize += i * 5000
-                2 -> prize += i * 100
-                3 -> prize += i * 5
+                0 -> lotto.prize += i * 100000 * 1000
+                1 -> lotto.prize += i * 5000 * 1000
+                2 -> lotto.prize += i * 100 * 1000
+                3 -> lotto.prize += i * 5 * 1000
             }
             println("${index + 1}등 : ${i}회")
         }
-        println("총상금 : ${prize}KW ")
+        println("총상금 : ${lotto.prize / 1000}KW ")
+    }
+
+    fun showRestartLottoMessage(lotto: Lotto) {
+        println("당첨된 로또 금액으로 다시 로또를 삽니다 ")
+        println("당첨된 로또 금액은 ${lotto.prize}원 입니다.")
+
+        totalCount = lotto.prize / 1000
     }
 }
