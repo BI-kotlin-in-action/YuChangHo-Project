@@ -5,18 +5,17 @@ import domain.LottoResult
 import domain.User
 import service.LottoService
 import view.SystemView
-import java.util.*
 
 class LottoProgram {
     companion object {
         const val MAX_RANK: Int = 4
         const val LOTTO_PRICE: Int = 1000
     }
-    private val lotto: Lotto = Lotto(sortedSetOf())
-    private val user: User = User(0, 0, mutableListOf<SortedSet<Int>>())
+    private val user: User = User(0, 0, mutableListOf<Lotto>())
     private val lottoResult: LottoResult = LottoResult(0, IntArray(MAX_RANK))
     private val lottoService: LottoService = LottoService()
     private val systemView: SystemView = SystemView()
+    private val winLotto: Lotto = lottoService.makeRandomNum()
 
     fun run() {
         start()
@@ -39,7 +38,6 @@ class LottoProgram {
             lottoService.setManualLottoNum(user)
         }
 
-        lotto.winNum = lottoService.makeRandomNum()
         systemView.showStartAutoLottoMessage()
 
         repeat(user.autoLottoCount) {
@@ -52,8 +50,8 @@ class LottoProgram {
     fun end() {
         systemView.showLottoNumMessage()
         lottoService.showLottoNum(user)
-        systemView.showWinNumMessage(lotto.winNum)
-        systemView.showLottoResultMessage(lottoService.getResult(lottoResult, lotto, user))
+        systemView.showWinNumMessage(winLotto.num)
+        systemView.showLottoResultMessage(lottoService.getResult(lottoResult, winLotto, user))
     }
 
     fun replay() {
