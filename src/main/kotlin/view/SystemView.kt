@@ -1,6 +1,7 @@
 package view
 
 import domain.LottoResult
+import domain.PrizeByRank
 import java.util.SortedSet
 
 class SystemView {
@@ -10,13 +11,6 @@ class SystemView {
         const val LOTTO_START_NUM: Int = 1
         const val LOTTO_END_NUM: Int = 45
         const val LOTTO_SIZE: Int = 6
-    }
-
-    enum class PrizeByRank(val rank: Int, val prize: Int) {
-        FIRST(0, 100000),
-        SECOND(1, 5000),
-        THIRD(2, 100),
-        FOURTH(3, 5),
     }
 
     var canBuy: Int = 0
@@ -60,15 +54,18 @@ class SystemView {
 
     fun showLottoResultMessage(lottoResult: LottoResult) {
         println("로또 당첨결과")
-        lottoResult.rank.forEachIndexed { index, i ->
-            when (index) {
-                PrizeByRank.FIRST.rank -> lottoResult.prize += i * PrizeByRank.FIRST.prize * KW
-                PrizeByRank.SECOND.rank -> lottoResult.prize += i * PrizeByRank.SECOND.prize * KW
-                PrizeByRank.THIRD.rank -> lottoResult.prize += i * PrizeByRank.THIRD.prize * KW
-                PrizeByRank.FOURTH.rank -> lottoResult.prize += i * PrizeByRank.FOURTH.prize * KW
-            }
-            println("${index + 1}등 : ${i}회")
+
+//        lottoResult.rank.forEach { key, value ->
+//            lottoResult.prize += value * key.prize * KW
+//            println("${key.rank}등 : ${value}회")
+//        }
+
+        PrizeByRank.values().forEach { prizeByRank ->
+            val count = lottoResult.rank.getOrDefault(prizeByRank, 0)
+            lottoResult.prize += count * prizeByRank.prize * KW
+            println("${prizeByRank.rank}등 : ${count}회")
         }
+
         println("총상금 : ${lottoResult.prize / KW}KW ")
         println("***********************************************************")
     }

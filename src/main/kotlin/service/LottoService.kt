@@ -2,6 +2,7 @@ package service
 
 import domain.Lotto
 import domain.LottoResult
+import domain.PrizeByRank
 import domain.User
 
 class LottoService {
@@ -23,7 +24,7 @@ class LottoService {
         user.lottoNum.add(manualLottoNum)
     }
 
-    fun makeRandomNum(): Lotto {
+    fun makeRandomNum(): List<Int> {
 //        val autoLottoNum: TreeSet<Int> = sortedSetOf()
 //
 //        val range = (LOTTO_START_NUM..LOTTO_END_NUM)
@@ -40,22 +41,21 @@ class LottoService {
 //        return autoLottoNum
 
         val shuffledNums = NUMBERS.shuffled()
-        return Lotto(shuffledNums.subList(0, LOTTO_SIZE))
+        return shuffledNums.subList(0, LOTTO_SIZE)
     }
 
     fun showLottoNum(user: User) {
         println(user.lottoNum.joinToString("\n"))
     }
 
-    fun getResult(lottoResult: LottoResult, lotto: Lotto, user: User): LottoResult {
-        lottoResult.rank.fill(0)
-        lottoResult.prize = 0
-        val winNum = lotto.num
+    fun getResult(lottoResult: LottoResult, winLotto: Lotto, user: User): LottoResult {
+        val winNum = winLotto.num
 
         for (nums in user.lottoNum) {
             var count = nums.num.intersect(winNum).size
             if (count >= (MAX_RANK - 1)) {
-                lottoResult.rank[LOTTO_SIZE - count]++
+                val prizeByRank = PrizeByRank.values().find { it.rank == LOTTO_SIZE - count + 1 }!!
+                lottoResult.rank[prizeByRank] = lottoResult.rank.getOrDefault(prizeByRank, 0) + 1
             }
         }
         return lottoResult
