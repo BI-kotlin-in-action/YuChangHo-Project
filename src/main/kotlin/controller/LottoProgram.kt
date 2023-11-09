@@ -20,17 +20,18 @@ class LottoProgram {
 
     fun run() {
         start()
-        selectLottoNum()
+        selectManualLottoNum()
+        selectAutoLottoNum()
         end()
         replay()
     }
 
-    fun start() {
+    private fun start() {
         systemView.showStartMessage()
         winLotto.num.addAll(lottoService.makeRandomNum())
     }
 
-    fun selectLottoNum() {
+    private fun selectManualLottoNum() {
         systemView.showManualLottoBuyMessage()
         lottoService.setManualCountAndAutoCount(user, systemView.canBuy)
 
@@ -38,7 +39,9 @@ class LottoProgram {
             systemView.showNumInputMessage(i)
             lottoService.setManualLottoNum(user)
         }
+    }
 
+    private fun selectAutoLottoNum() {
         systemView.showStartAutoLottoMessage()
 
         repeat(user.autoLottoCount) {
@@ -48,14 +51,14 @@ class LottoProgram {
         systemView.showFinishAutoLottoMessage()
     }
 
-    fun end() {
+    private fun end() {
         systemView.showLottoNumMessage()
         lottoService.showLottoNum(user)
         systemView.showWinNumMessage(winLotto.num)
         systemView.showLottoResultMessage(lottoService.getResult(lottoResult, winLotto, user))
     }
 
-    fun replay() {
+    private fun replay() {
         if (lottoResult.prize >= LOTTO_PRICE) {
             systemView.showRestartLottoMessage(lottoResult)
             user.lottoNum.clear()
