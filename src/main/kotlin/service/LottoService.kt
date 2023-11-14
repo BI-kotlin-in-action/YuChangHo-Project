@@ -47,15 +47,14 @@ class LottoService {
     }
 
     fun getResult(lottoResult: LottoResult, winLotto: Lotto, user: User): LottoResult {
-        val winNum = winLotto.num
-
         for (nums in user.lottoNum) {
-            var count = nums.num.intersect(winNum).size
-            if (count >= (MAX_RANK - 1)) {
-                val prizeByRank = PrizeByRank.values().find { it.rank == LOTTO_SIZE - count + 1 }!!
-                lottoResult.rank[prizeByRank] = lottoResult.rank.getOrDefault(prizeByRank, 0) + 1
+            val rank = PrizeByRank.getRank(nums, winLotto)
+
+            if (rank != PrizeByRank.LOSE) {
+                lottoResult.rank[rank] = lottoResult.rank.getOrDefault(rank, 0) + 1
             }
         }
+
         return lottoResult
     }
 }
