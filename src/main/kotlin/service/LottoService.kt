@@ -43,7 +43,7 @@ class LottoService {
 //        return autoLottoNum
 
         val shuffledNums = NUMBERS.shuffled()
-        return shuffledNums.subList(0, LOTTO_SIZE)
+        return shuffledNums.take(LOTTO_SIZE)
     }
 
     fun getResult(lottoResult: LottoResult, winLotto: Lotto, user: User): LottoResult {
