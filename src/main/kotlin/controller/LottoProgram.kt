@@ -52,8 +52,7 @@ class LottoProgram {
     }
 
     private fun end() {
-        systemView.showLottoNumMessage()
-        lottoService.showLottoNum(user)
+        systemView.showLottoNumMessage(user)
         systemView.showWinNumMessage(winLotto.num)
         systemView.showLottoResultMessage(lottoService.getResult(lottoResult, winLotto, user))
     }

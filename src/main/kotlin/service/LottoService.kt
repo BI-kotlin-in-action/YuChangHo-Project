@@ -44,10 +44,6 @@ class LottoService {
         return shuffledNums.subList(0, LOTTO_SIZE)
     }
 
-    fun showLottoNum(user: User) {
-        println(user.lottoNum.joinToString("\n"))
-    }
-
     fun getResult(lottoResult: LottoResult, winLotto: Lotto, user: User): LottoResult {
         val winNum = winLotto.num
 

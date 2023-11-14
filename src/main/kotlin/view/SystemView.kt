@@ -2,6 +2,7 @@ package view
 
 import domain.LottoResult
 import domain.PrizeByRank
+import domain.User
 import java.util.SortedSet
 
 class SystemView {
@@ -43,7 +44,8 @@ class SystemView {
         println("자동 로또 번호 고르기를 완료했습니다. ")
     }
 
-    fun showLottoNumMessage() {
+    fun showLottoNumMessage(user: User) {
+        println(user.lottoNum.joinToString("\n"))
         println("구매하신 로또 번호를 알려드립니다.")
     }
 
