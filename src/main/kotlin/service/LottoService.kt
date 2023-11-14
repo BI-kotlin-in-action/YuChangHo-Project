@@ -6,6 +6,8 @@ import domain.PrizeByRank
 import domain.User
 
 class LottoService {
+
+    val validator: Validator = Validator()
     companion object {
         const val MAX_RANK: Int = 4
         const val LOTTO_START_NUM: Int = 1
@@ -16,13 +18,40 @@ class LottoService {
         val NUMBERS = (LOTTO_START_NUM..LOTTO_END_NUM).toList()
     }
 
+    fun moneyCheck(input: String): Int {
+        validator.numericCheck(input)
+
+        return input.toInt()
+    }
+
+    fun manualCountCheck(input: String, totalCount: Int): Int {
+        validator.numericCheck(input)
+
+        val manualCount = input.toInt()
+
+        validator.rangeCheck(manualCount, 0, totalCount)
+
+        return manualCount
+    }
+
+    fun manualLottoNumCheck(input: List<String>): Lotto {
+        validator.lengthCheck(input, LOTTO_SIZE)
+        validator.numericCheck(input)
+
+        val manualLottoNum = input.map { it.toInt() }
+
+        manualLottoNum.forEach { validator.rangeCheck(it, LOTTO_START_NUM, LOTTO_END_NUM) }
+        validator.duplicateCheck(manualLottoNum)
+
+        return Lotto(manualLottoNum)
+    }
     fun setManualCountAndAutoCount(user: User, totalCount: Int) {
-        user.manualLottoCount = readln().toInt()
+        user.manualLottoCount = manualCountCheck(readln(), totalCount)
         user.autoLottoCount = totalCount - user.manualLottoCount
     }
 
     fun setManualLottoNum(user: User) {
-        val manualLottoNum = Lotto(readln().split(" ").map { it.toInt() })
+        val manualLottoNum = manualLottoNumCheck(readln().split(" "))
         user.lottoNum.add(manualLottoNum)
     }
 

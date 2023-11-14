@@ -3,9 +3,12 @@ package view
 import domain.LottoResult
 import domain.PrizeByRank
 import domain.User
+import service.LottoService
 import java.util.SortedSet
 
 class SystemView {
+
+    private val lottoService: LottoService = LottoService()
     companion object {
         const val LOTTO_PRICE: Int = 1000
         const val KW: Int = 1000
@@ -13,21 +16,21 @@ class SystemView {
         const val LOTTO_END_NUM: Int = 45
         const val LOTTO_SIZE: Int = 6
     }
-
     var canBuy: Int = 0
 
     fun canBuyMax() {
-        val money = readLine()!!.toInt()
+        val money = lottoService.moneyCheck(readln())
         this.canBuy = money / LOTTO_PRICE
     }
+
     fun showStartMessage() {
-        println("로또 금액은 ${LOTTO_PRICE}원이며 로또 구매에 사용할 금액을 입력해주세요.")
+        if (canBuy == 0) {
+            println("로또 금액은 ${LOTTO_PRICE}원이며 로또 구매에 사용할 금액을 입력해주세요.")
+            canBuyMax()
+        }
     }
 
     fun showManualLottoBuyMessage() {
-        if (canBuy == 0) {
-            canBuyMax()
-        }
         println("로또를 $canBuy 장 만큼 구매할 수 있습니다.")
         println("수동으로 몇 장 구매하시겠습니까? 나머지는 모두 자동으로 구매합니다.")
     }
