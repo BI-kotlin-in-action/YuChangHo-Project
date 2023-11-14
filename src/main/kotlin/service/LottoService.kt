@@ -11,6 +11,8 @@ class LottoService {
         const val LOTTO_START_NUM: Int = 1
         const val LOTTO_END_NUM: Int = 45
         const val LOTTO_SIZE: Int = 6
+
+        @JvmStatic
         val NUMBERS = (LOTTO_START_NUM..LOTTO_END_NUM).toList()
     }
 
