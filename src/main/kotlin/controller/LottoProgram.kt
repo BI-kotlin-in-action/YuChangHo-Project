@@ -29,7 +29,7 @@ class LottoProgram {
 
     private fun start() {
         systemView.showStartMessage()
-        winLotto.num.addAll(lottoService.makeRandomNum())
+        winLotto.getLottoNum().addAll(lottoService.makeRandomNum())
     }
 
     private fun selectManualLottoNum() {
@@ -54,7 +54,7 @@ class LottoProgram {
 
     private fun end() {
         systemView.showLottoNumMessage(user)
-        systemView.showWinNumMessage(winLotto.num)
+        systemView.showWinNumMessage(winLotto.getLottoNum())
         systemView.showLottoResultMessage(lottoService.getResult(lottoResult, winLotto, user))
     }
 
@@ -62,7 +62,7 @@ class LottoProgram {
         if (lottoResult.prize >= LOTTO_PRICE) {
             systemView.showRestartLottoMessage(lottoResult)
             user.lottoNum.clear()
-            winLotto.num.clear()
+            winLotto.getLottoNum().clear()
             lottoResult.rank.clear()
             lottoResult.prize = 0
 
