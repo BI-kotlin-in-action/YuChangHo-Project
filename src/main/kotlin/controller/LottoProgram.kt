@@ -19,11 +19,12 @@ class LottoProgram {
     private val winLotto: Lotto = Lotto(sortedSetOf())
 
     fun run() {
-        start()
-        selectManualLottoNum()
-        selectAutoLottoNum()
-        end()
-        replay()
+        do {
+            start()
+            selectManualLottoNum()
+            selectAutoLottoNum()
+            end()
+        } while (isReplay())
     }
 
     private fun start() {
@@ -57,14 +58,16 @@ class LottoProgram {
         systemView.showLottoResultMessage(lottoService.getResult(lottoResult, winLotto, user))
     }
 
-    private fun replay() {
+    private fun isReplay(): Boolean {
         if (lottoResult.prize >= LOTTO_PRICE) {
             systemView.showRestartLottoMessage(lottoResult)
             user.lottoNum.clear()
             winLotto.num.clear()
             lottoResult.rank.clear()
             lottoResult.prize = 0
-            run()
+
+            return true
         }
+        return false
     }
 }
