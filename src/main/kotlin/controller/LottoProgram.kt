@@ -2,7 +2,6 @@ package controller
 
 import domain.Lotto
 import domain.LottoResult
-import domain.PrizeByRank
 import domain.User
 import service.LottoService
 import view.SystemView
@@ -12,8 +11,8 @@ class LottoProgram {
         const val MAX_RANK: Int = 4
         const val LOTTO_PRICE: Int = 1000
     }
-    private val user: User = User(0, 0, mutableListOf<Lotto>())
-    private val lottoResult: LottoResult = LottoResult(0, HashMap<PrizeByRank, Int>())
+    private val user: User = User()
+    private val lottoResult: LottoResult = LottoResult()
     private val lottoService: LottoService = LottoService()
     private val systemView: SystemView = SystemView()
     private val winLotto: Lotto = Lotto(sortedSetOf())
@@ -46,7 +45,7 @@ class LottoProgram {
         systemView.showStartAutoLottoMessage()
 
         repeat(user.autoLottoCount) {
-            user.lottoNum.add(Lotto(lottoService.makeRandomNum()))
+            user.addLotto(Lotto(lottoService.makeRandomNum()))
         }
 
         systemView.showFinishAutoLottoMessage()
@@ -61,7 +60,7 @@ class LottoProgram {
     private fun isReplay(): Boolean {
         if (lottoResult.prize >= LOTTO_PRICE) {
             systemView.showRestartLottoMessage(lottoResult)
-            user.lottoNum.clear()
+            user.lottoClear()
             winLotto.getLottoNum().clear()
             lottoResult.rank.clear()
             lottoResult.prize = 0

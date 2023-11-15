@@ -1,3 +1,15 @@
 package domain
 
-data class User(var manualLottoCount: Int, var autoLottoCount: Int, val lottoNum: MutableList<Lotto>)
+data class User(var manualLottoCount: Int = 0, var autoLottoCount: Int = 0, private val lottoNum: MutableList<Lotto> = mutableListOf<Lotto>()) {
+    fun addLotto(lotto: Lotto) {
+        lottoNum.add(lotto)
+    }
+
+    fun lottoClear() {
+        lottoNum.clear()
+    }
+
+    fun getLottoNum(): MutableList<Lotto> {
+        return lottoNum
+    }
+}

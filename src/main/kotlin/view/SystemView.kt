@@ -48,7 +48,7 @@ class SystemView {
     }
 
     fun showLottoNumMessage(user: User) {
-        println(user.lottoNum.joinToString("\n"))
+        println(user.getLottoNum().joinToString("\n"))
         println("구매하신 로또 번호를 알려드립니다.")
     }
 
