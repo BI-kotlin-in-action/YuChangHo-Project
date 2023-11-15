@@ -11,15 +11,8 @@ enum class PrizeByRank(val rank: Int, val prize: Int) {
 
     companion object {
         @JvmStatic
-        fun getRank(userLotto: Lotto, winLotto: Lotto): PrizeByRank {
-            val winNum = winLotto.getLottoNum()
-            var count = userLotto.getLottoNum().intersect(winNum).size
-
-            if (count >= (LottoService.MAX_RANK - 1)) {
-                return values().find { it.rank == LottoService.LOTTO_SIZE - count + 1 }!!
-            }
-
-            return LOSE
+        fun getRank(count: Int): PrizeByRank {
+            return values().find { it.rank == LottoService.LOTTO_SIZE - count + 1 } ?: LOSE
         }
     }
 }

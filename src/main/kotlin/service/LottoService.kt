@@ -52,7 +52,7 @@ class LottoService {
 
     fun setManualLottoNum(user: User) {
         val manualLottoNum = manualLottoNumCheck(readln().split(" "))
-        user.lottoNum.add(manualLottoNum)
+        user.addLotto(manualLottoNum)
     }
 
     fun makeRandomNum(): List<Int> {
@@ -76,10 +76,13 @@ class LottoService {
     }
 
     fun getResult(lottoResult: LottoResult, winLotto: Lotto, user: User): LottoResult {
-        for (nums in user.lottoNum) {
-            val rank = PrizeByRank.getRank(nums, winLotto)
+        val winNum = winLotto.getLottoNum()
 
-            if (rank != PrizeByRank.LOSE) {
+        for (nums in user.getLottoNum()) {
+            var count = nums.getLottoNum().intersect(winNum).size
+
+            if (count >= (MAX_RANK - 1)) {
+                val rank = PrizeByRank.getRank(count)
                 lottoResult.rank[rank] = lottoResult.rank.getOrDefault(rank, 0) + 1
             }
         }
