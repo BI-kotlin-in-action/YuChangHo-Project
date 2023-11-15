@@ -35,4 +35,10 @@ class Validator {
             throw IllegalArgumentException("입력하신 숫자가 범위를 벗어났습니다.")
         }
     }
+
+    fun rangeCheck(input: Int) {
+        if (input !in LottoService.NUMBERS) {
+            throw IllegalArgumentException("입력하신 숫자가 범위를 벗어났습니다.")
+        }
+    }
 }

@@ -15,7 +15,7 @@ class LottoService {
         const val LOTTO_SIZE: Int = 6
 
         @JvmStatic
-        val NUMBERS = (LOTTO_START_NUM..LOTTO_END_NUM).toList()
+        val NUMBERS: IntRange = (LOTTO_START_NUM..LOTTO_END_NUM)
     }
 
     fun moneyCheck(input: String): Int {
@@ -40,7 +40,7 @@ class LottoService {
 
         val manualLottoNum = input.map { it.toInt() }
 
-        manualLottoNum.forEach { validator.rangeCheck(it, LOTTO_START_NUM, LOTTO_END_NUM) }
+        manualLottoNum.forEach { validator.rangeCheck(it) }
         validator.duplicateCheck(manualLottoNum)
 
         return Lotto(manualLottoNum)
