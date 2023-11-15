@@ -4,7 +4,6 @@ import domain.LottoResult
 import domain.PrizeByRank
 import domain.User
 import service.LottoService
-import java.util.SortedSet
 
 class SystemView {
 
@@ -45,7 +44,7 @@ class SystemView {
         println("구매하신 로또 번호를 알려드립니다.")
     }
 
-    fun showWinNumMessage(winNum: SortedSet<Int>) {
+    fun showWinNumMessage(winNum: Set<Int>) {
         println("로또 당첨번호를 알려드립니다.")
         println("로또 당첨번호 = $winNum")
     }

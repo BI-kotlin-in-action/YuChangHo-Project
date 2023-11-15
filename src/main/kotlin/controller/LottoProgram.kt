@@ -29,7 +29,7 @@ class LottoProgram {
     private fun start() {
         systemView.showStartMessage(user.canBuy)
         if (user.canBuy == 0) { user.canBuy = lottoService.canBuyMax() }
-        winLotto.getLottoNum().addAll(lottoService.makeRandomNum())
+        winLotto.addLottoNum(lottoService.makeRandomNum())
     }
 
     private fun selectManualLottoNum() {
@@ -62,8 +62,8 @@ class LottoProgram {
         if (lottoResult.prize >= LOTTO_PRICE) {
             systemView.showRestartLottoMessage(lottoResult)
             user.canBuy = lottoResult.prize / LOTTO_PRICE
-            user.lottoClear()
-            winLotto.getLottoNum().clear()
+            user.lottoNumListClear()
+            winLotto.lottoNumClear()
             lottoResult.rank.clear()
             lottoResult.prize = 0
             return true

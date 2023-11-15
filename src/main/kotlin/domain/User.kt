@@ -5,7 +5,7 @@ data class User(var canBuy: Int = 0, var manualLottoCount: Int = 0, var autoLott
         lottoNumList.add(lotto)
     }
 
-    fun lottoClear() {
+    fun lottoNumListClear() {
         lottoNumList.clear()
     }
 
