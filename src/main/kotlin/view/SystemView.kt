@@ -16,21 +16,14 @@ class SystemView {
         const val LOTTO_END_NUM: Int = 45
         const val LOTTO_SIZE: Int = 6
     }
-    var canBuy: Int = 0
 
-    fun canBuyMax() {
-        val money = lottoService.moneyCheck(readln())
-        this.canBuy = money / LOTTO_PRICE
-    }
-
-    fun showStartMessage() {
+    fun showStartMessage(canBuy: Int) {
         if (canBuy == 0) {
             println("로또 금액은 ${LOTTO_PRICE}원이며 로또 구매에 사용할 금액을 입력해주세요.")
-            canBuyMax()
         }
     }
 
-    fun showManualLottoBuyMessage() {
+    fun showManualLottoBuyMessage(canBuy: Int) {
         println("로또를 $canBuy 장 만큼 구매할 수 있습니다.")
         println("수동으로 몇 장 구매하시겠습니까? 나머지는 모두 자동으로 구매합니다.")
     }
@@ -80,7 +73,5 @@ class SystemView {
     fun showRestartLottoMessage(lottoResult: LottoResult) {
         println("당첨된 로또 금액으로 다시 로또를 삽니다 ")
         println("당첨된 로또 금액은 ${lottoResult.prize}원 입니다.")
-
-        canBuy = lottoResult.prize / LOTTO_PRICE
     }
 }
