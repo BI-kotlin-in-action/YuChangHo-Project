@@ -19,8 +19,8 @@ class LottoService {
         val NUMBERS: IntRange = (LOTTO_START_NUM..LOTTO_END_NUM)
     }
 
-    fun canBuyMax(): Int {
-        val money = moneyCheck(readln())
+    fun canBuyMax(input: String): Int {
+        val money = moneyCheck(input)
         return money / SystemView.LOTTO_PRICE
     }
 
@@ -51,13 +51,13 @@ class LottoService {
 
         return Lotto(manualLottoNum)
     }
-    fun setManualCountAndAutoCount(user: User, totalCount: Int) {
-        user.manualLottoCount = manualCountCheck(readln(), totalCount)
+    fun setManualCountAndAutoCount(input: String, user: User, totalCount: Int) {
+        user.manualLottoCount = manualCountCheck(input, totalCount)
         user.autoLottoCount = totalCount - user.manualLottoCount
     }
 
-    fun setManualLottoNum(user: User) {
-        val manualLottoNum = manualLottoNumCheck(readln().split(" "))
+    fun setManualLottoNum(input: String, user: User) {
+        val manualLottoNum = manualLottoNumCheck(input.split(" "))
         user.addLotto(manualLottoNum)
     }
 
