@@ -5,7 +5,7 @@ import java.util.SortedSet
 data class Lotto(private val num: SortedSet<Int>) {
     constructor(num: List<Int>) : this(num.toSortedSet())
 
-    fun getLottoNum(): SortedSet<Int> {
+    fun getLottoNum(): Set<Int> {
         return num
     }
 }
