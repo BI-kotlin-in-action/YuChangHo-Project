@@ -27,13 +27,14 @@ class LottoProgram {
     }
 
     private fun start() {
-        systemView.showStartMessage()
+        systemView.showStartMessage(user.canBuy)
+        if (user.canBuy == 0) { user.canBuy = lottoService.canBuyMax() }
         winLotto.getLottoNum().addAll(lottoService.makeRandomNum())
     }
 
     private fun selectManualLottoNum() {
-        systemView.showManualLottoBuyMessage()
-        lottoService.setManualCountAndAutoCount(user, systemView.canBuy)
+        systemView.showManualLottoBuyMessage(user.canBuy)
+        lottoService.setManualCountAndAutoCount(user, user.canBuy)
 
         for (i in 0 until user.manualLottoCount) {
             systemView.showNumInputMessage(i)
@@ -60,11 +61,11 @@ class LottoProgram {
     private fun isReplay(): Boolean {
         if (lottoResult.prize >= LOTTO_PRICE) {
             systemView.showRestartLottoMessage(lottoResult)
+            user.canBuy = lottoResult.prize / LOTTO_PRICE
             user.lottoClear()
             winLotto.getLottoNum().clear()
             lottoResult.rank.clear()
             lottoResult.prize = 0
-
             return true
         }
         return false

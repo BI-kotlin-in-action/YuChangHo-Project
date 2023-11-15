@@ -4,6 +4,7 @@ import domain.Lotto
 import domain.LottoResult
 import domain.PrizeByRank
 import domain.User
+import view.SystemView
 
 class LottoService {
 
@@ -16,6 +17,11 @@ class LottoService {
 
         @JvmStatic
         val NUMBERS: IntRange = (LOTTO_START_NUM..LOTTO_END_NUM)
+    }
+
+    fun canBuyMax(): Int {
+        val money = moneyCheck(readln())
+        return money / SystemView.LOTTO_PRICE
     }
 
     fun moneyCheck(input: String): Int {
