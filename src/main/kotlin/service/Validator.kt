@@ -18,9 +18,9 @@ class Validator {
         }
     }
 
-    fun lengthCheck(input: List<String>, size: Int) {
-        if (input.size != size) {
-            throw IllegalArgumentException("입력하신 숫자의 개수가 ${size}이 아닙니다.")
+    fun lengthCheck(input: List<String>) {
+        if (input.size != LottoService.LOTTO_SIZE) {
+            throw IllegalArgumentException("입력하신 숫자의 개수가 ${LottoService.LOTTO_SIZE}이 아닙니다.")
         }
     }
 

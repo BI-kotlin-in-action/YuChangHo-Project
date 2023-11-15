@@ -41,7 +41,7 @@ class LottoService {
     }
 
     fun manualLottoNumCheck(input: List<String>): Lotto {
-        validator.lengthCheck(input, LOTTO_SIZE)
+        validator.lengthCheck(input)
         validator.numericCheck(input)
 
         val manualLottoNum = input.map { it.toInt() }
