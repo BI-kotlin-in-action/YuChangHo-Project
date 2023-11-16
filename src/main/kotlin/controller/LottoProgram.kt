@@ -10,11 +10,12 @@ class LottoProgram {
     companion object {
         const val LOTTO_PRICE: Int = 1000
     }
-    private val user: User = User()
+    private lateinit var user: User
     private val lottoResult: LottoResult = LottoResult()
     private val lottoService: LottoService = LottoService()
     private val systemView: SystemView = SystemView()
     private val winLotto: Lotto = Lotto()
+    private var canBuy = 0
 
     fun run() {
         do {
@@ -26,14 +27,15 @@ class LottoProgram {
     }
 
     private fun start() {
-        val money = systemView.showStartMessage(user.canBuy)
-        if (user.canBuy == 0) { user.canBuy = lottoService.canBuyMax(money) }
+        val money = systemView.showStartMessage(canBuy)
+        if (canBuy == 0) { canBuy = lottoService.canBuyMax(money) }
         winLotto.addLottoNum(lottoService.makeRandomNum())
     }
 
     private fun selectManualLottoNum() {
-        val manualLottoCount = systemView.showManualLottoBuyMessage(user.canBuy)
-        lottoService.setManualCountAndAutoCount(manualLottoCount, user, user.canBuy)
+        val manualLottoCountInput = systemView.showManualLottoBuyMessage(canBuy)
+        val (manualLottoCount, autoLottoCount) = lottoService.setManualCountAndAutoCount(manualLottoCountInput, canBuy)
+        user = User(canBuy, manualLottoCount, autoLottoCount)
 
         for (i in 0 until user.manualLottoCount) {
             val manualLottoNum = systemView.showNumInputMessage(i)
@@ -60,7 +62,7 @@ class LottoProgram {
     private fun isReplay(): Boolean {
         if (lottoResult.prize >= LOTTO_PRICE) {
             systemView.showRestartLottoMessage(lottoResult)
-            user.canBuy = lottoResult.prize / LOTTO_PRICE
+            canBuy = lottoResult.prize / LOTTO_PRICE
             user.lottoNumListClear()
             winLotto.lottoNumClear()
             lottoResult.rankClear()

@@ -51,9 +51,11 @@ class LottoService {
 
         return Lotto(manualLottoNum)
     }
-    fun setManualCountAndAutoCount(input: String, user: User, totalCount: Int) {
-        user.manualLottoCount = manualCountCheck(input, totalCount)
-        user.autoLottoCount = totalCount - user.manualLottoCount
+    fun setManualCountAndAutoCount(input: String, totalCount: Int): Pair<Int, Int> {
+        val manualLottoCount = manualCountCheck(input, totalCount)
+        val autoLottoCount = totalCount - manualLottoCount
+
+        return Pair(manualLottoCount, autoLottoCount)
     }
 
     fun setManualLottoNum(input: String, user: User) {
