@@ -89,7 +89,7 @@ class LottoService {
 
             if (count >= (MAX_RANK - 1)) {
                 val rank = PrizeByRank.getRank(count)
-                lottoResult.rank[rank] = lottoResult.rank.getOrDefault(rank, 0) + 1
+                lottoResult.putRank(rank)
             }
         }
 

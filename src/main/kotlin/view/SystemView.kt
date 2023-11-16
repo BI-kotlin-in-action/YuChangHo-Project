@@ -64,7 +64,7 @@ class SystemView {
 
         PrizeByRank.values().forEach { prizeByRank ->
             if (prizeByRank.rank != 5) {
-                val count = lottoResult.rank.getOrDefault(prizeByRank, 0)
+                val count = lottoResult.getRankCount(prizeByRank)
                 lottoResult.prize += count * prizeByRank.prize * KW
                 println("${prizeByRank.rank}등 : ${count}회")
             }

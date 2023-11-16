@@ -64,7 +64,7 @@ class LottoProgram {
             user.canBuy = lottoResult.prize / LOTTO_PRICE
             user.lottoNumListClear()
             winLotto.lottoNumClear()
-            lottoResult.rank.clear()
+            lottoResult.rankClear()
             lottoResult.prize = 0
             return true
         }
