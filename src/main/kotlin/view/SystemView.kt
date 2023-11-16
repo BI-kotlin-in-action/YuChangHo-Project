@@ -3,11 +3,8 @@ package view
 import domain.LottoResult
 import domain.PrizeByRank
 import domain.User
-import service.LottoService
 
 class SystemView {
-
-    private val lottoService: LottoService = LottoService()
     companion object {
         const val LOTTO_PRICE: Int = 1000
         const val KW: Int = 1000
@@ -15,22 +12,24 @@ class SystemView {
         const val LOTTO_END_NUM: Int = 45
         const val LOTTO_SIZE: Int = 6
     }
-    fun readUserInput(): String {
-        return readln()
-    }
-    fun showStartMessage(canBuy: Int) {
-        if (canBuy == 0) {
+    fun readUserMoney(canBuy: Int): String {
+        return if (canBuy == 0) {
             println("로또 금액은 ${LOTTO_PRICE}원이며 로또 구매에 사용할 금액을 입력해주세요.")
+            return readln()
+        } else {
+            return ""
         }
     }
 
-    fun showManualLottoBuyMessage(canBuy: Int) {
+    fun readManualLottoCount(canBuy: Int): String {
         println("로또를 $canBuy 장 만큼 구매할 수 있습니다.")
         println("수동으로 몇 장 구매하시겠습니까? 나머지는 모두 자동으로 구매합니다.")
+        return readln()
     }
 
-    fun showNumInputMessage(count: Int) {
+    fun readManualLottoNum(count: Int): String {
         println(" ${count + 1}번째 수동 로또입니다. $LOTTO_START_NUM~${LOTTO_END_NUM}사이의 숫자 ${LOTTO_SIZE}개를 입력해주세요. (숫자는 공백으로 구분합니다.)")
+        return readln()
     }
 
     fun showStartAutoLottoMessage() {

@@ -27,22 +27,19 @@ class LottoProgram {
     }
 
     private fun start() {
-        systemView.showStartMessage(canBuy)
-        if (canBuy == 0) { val money = systemView.readUserInput()
-            canBuy = lottoService.canBuyMax(money) }
+        val money = systemView.readUserMoney(canBuy)
+        if (canBuy == 0) { canBuy = lottoService.canBuyMax(money) }
 
         winLotto.addLottoNum(lottoService.makeRandomNum())
     }
 
     private fun selectManualLottoNum() {
-        systemView.showManualLottoBuyMessage(canBuy)
-        val manualLottoCountInput = systemView.readUserInput()
+        val manualLottoCountInput = systemView.readManualLottoCount(canBuy)
         val (manualLottoCount, autoLottoCount) = lottoService.setManualCountAndAutoCount(manualLottoCountInput, canBuy)
         user = User(canBuy, manualLottoCount, autoLottoCount)
 
         for (i in 0 until user.manualLottoCount) {
-            systemView.showNumInputMessage(i)
-            val manualLottoNum = systemView.readUserInput()
+            val manualLottoNum = systemView.readManualLottoNum(i)
 
             lottoService.setManualLottoNum(manualLottoNum, user)
         }
