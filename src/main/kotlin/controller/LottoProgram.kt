@@ -8,14 +8,13 @@ import view.SystemView
 
 class LottoProgram {
     companion object {
-        const val MAX_RANK: Int = 4
         const val LOTTO_PRICE: Int = 1000
     }
     private val user: User = User()
     private val lottoResult: LottoResult = LottoResult()
     private val lottoService: LottoService = LottoService()
     private val systemView: SystemView = SystemView()
-    private val winLotto: Lotto = Lotto(sortedSetOf())
+    private val winLotto: Lotto = Lotto()
 
     fun run() {
         do {
