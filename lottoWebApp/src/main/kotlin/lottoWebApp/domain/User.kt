@@ -12,7 +12,7 @@ data class User (
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null,
     var name: String,
-    var money: Int ,
-    var manualLottoCount: Int  ,
+    var money: Int,
+    var manualLottoCount: Int,
     var autoLottoCount: Int
 )

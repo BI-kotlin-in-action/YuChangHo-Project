@@ -1,6 +1,7 @@
 package lottoWebApp.service
 
 import lottoWebApp.domain.User
+import lottoWebApp.repository.UserLottoRepository
 import lottoWebApp.repository.UserRepository
 import org.springframework.stereotype.Service
 
@@ -21,6 +22,19 @@ class UserService(private val userRepository: UserRepository) {
     fun chargeMoney(name: String, money: Int) {
         val user = findUserByName(name)[0]
         user.money = money
+        saveUser(user)
+    }
+
+    fun buyManualOrAuto(name: String, manualCount: Int, autoCount: Int) {
+        val user = findUserByName(name)[0]
+        user.manualLottoCount = manualCount
+        user.autoLottoCount = autoCount
+        saveUser(user)
+    }
+
+    fun withdrawMoney(name: String, money: Int) {
+        val user = findUserByName(name)[0]
+        user.money -= money
         saveUser(user)
     }
 }
