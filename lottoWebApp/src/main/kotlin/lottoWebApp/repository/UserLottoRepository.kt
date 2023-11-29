@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface UserLottoRepository: JpaRepository<UserLotto, String>{
+    fun findByName (name: String): List<UserLotto>
 }

@@ -8,7 +8,7 @@ import javax.persistence.Table
 @Table(name = "lottoresult")
 data class LottoResult(
     @Id
-    var user: String,
+    var name: String,
     var firstCount: Int,
     var secondCount: Int,
     var thirdCount: Int,
