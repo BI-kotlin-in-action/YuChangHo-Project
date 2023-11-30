@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class LottoController(val userService: UserService, val userLottoService: UserLottoService) {
+class LottoController(val userService: UserService) {
 
     @GetMapping("/all-user")
     fun findAllUserController(): List<User> {
@@ -38,31 +38,10 @@ class LottoController(val userService: UserService, val userLottoService: UserLo
         return userService.findUserByName(user.name)
     }
 
-    @PostMapping("/manual-lotto/add")
-    fun manualLottoNumController(@RequestBody userLotto: UserLotto): List<UserLotto> {
-        userLottoService.saveManualLottoNum(userLotto.name, userLotto.lottoNum)
-
-        return userLottoService.findByName(userLotto.name)
-    }
-
-    @PostMapping("/auto-lotto/add")
-    fun autoLottoController(@RequestBody user: User): List<UserLotto> {
-        userLottoService.saveAutoLottoNum(user.name, user.autoLottoCount)
-
-        return userLottoService.findByName(user.name)
-    }
-
     @PostMapping("/money/update")
     fun withdrawMoneyController(@RequestBody user: User): List<User> {
         userService.withdrawMoney(user.name, user.money)
 
         return userService.findUserByName(user.name)
     }
-
-
-    @GetMapping("/lotto/win")
-    fun checkLottoWinController() {
-
-    }
-
 }

@@ -15,6 +15,12 @@ class UserLottoService ( private val userLottoRepository: UserLottoRepository) {
 
         @JvmStatic
         val NUMBERS: IntRange = (LOTTO_START_NUM..LOTTO_END_NUM)
+
+        @JvmStatic
+        fun makeRandomNum(): List<Int> {
+            val shuffledNums = NUMBERS.shuffled()
+            return shuffledNums.take(LOTTO_SIZE)
+        }
     }
 
     fun findByName(name: String): List<UserLotto>{
@@ -23,11 +29,6 @@ class UserLottoService ( private val userLottoRepository: UserLottoRepository) {
     fun saveManualLottoNum(name: String, lottoNum: String) {
         val manualLotto = UserLotto(name = name, type =  0, lottoNum = lottoNum)
         userLottoRepository.save(manualLotto)
-    }
-
-    fun makeRandomNum(): List<Int> {
-        val shuffledNums = NUMBERS.shuffled()
-        return shuffledNums.take(LOTTO_SIZE)
     }
 
     fun saveAutoLottoNum(name: String, autoCount: Int){
