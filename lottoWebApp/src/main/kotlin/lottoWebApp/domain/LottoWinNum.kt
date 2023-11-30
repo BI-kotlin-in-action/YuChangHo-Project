@@ -10,6 +10,6 @@ import javax.persistence.Table
 @Table(name = "lottowinnum")
 data class LottoWinNum(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int,
+    var id: Int? = null,
     var winNum: String
 )
